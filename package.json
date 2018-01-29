@@ -1,19 +1,37 @@
 {
   "name": "demo",
   "version": "0.0.1",
+  "author": {
+    "name": "Adam Hobaugh",
+    "email": "adam@hobaugh.us",
+    "url": "https://adam.hobaugh.us"
+  },
   "description": "An Ionic project",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/ionic-team/ionic-conference-app.git"
   },
+  "main": "electron/electron.js",
   "scripts": {
+    "dev": "nf start",
+    "electron dist": "electron .",
+    "ebuild": "npm run build && node_modules/.bin/build",
     "build": "ionic-app-scripts build",
     "clean": "ionic-app-scripts clean",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "npm run build",
     "ionic:serve": "npm run serve",
     "ionic:lint": "npm run lint"
+  },
+  "build": {
+    "appId": "com.adamhobaugh.demo",
+    "electronVersion": "1.7.5",
+    "asar": false,
+    "files": [
+      "www/**/*",
+      "electron/*"
+    ]
   },
   "dependencies": {
     "@angular/common": "5.0.0",
@@ -47,10 +65,15 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.5",
+    "electron": "^1.7.11",
+    "electron-builder": "^19.55.2",
+    "foreman": "^2.0.0",
     "typescript": "~2.4.2"
   },
   "config": {
-    "ionic_aot_write_to_disk": true
+    "ionic_aot_write_to_disk": true,
+    "ionic_bundler": "webpack",
+    "ionic_webpack": "./config/webpack.config.js"
   },
   "cordova": {
     "platforms": [

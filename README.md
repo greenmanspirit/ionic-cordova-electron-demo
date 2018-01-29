@@ -1,208 +1,40 @@
-# Ionic Conference Application
+# My Demo Ionic App
+This is a Demo application based on the Ionic Conference Application. I made this up as a way to track everything I had to do to get my other Ionic application running with Electron builds in addition to Android.
 
-This is purely a demo of Ionic with TypeScript. It is still in development.
+## WARNING
+This is what I had to do, please do not take this as an authoritative source. I wrote this after I worked everything out so I may have missed a step. This is presented as is with no warranty. That said, if something below helps you, by all means use it.
 
+## Resources
+1. https://medium.com/@LohaniDamodar/lets-make-desktop-application-with-ionic-3-and-electron-44316f82901d
+1. https://competenepal.com/ionic2-electron-part-2/
+1. https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html#requirements-and-support
+1. https://ionicframework.com/getting-started/
 
-## Important!
-**There is not an actual Ionic Conference at this time.** This project is just to show off Ionic components in a real-world application. Please go through the steps in [CONTRIBUTING.md](https://github.com/ionic-team/ionic-conference-app/blob/master/.github/CONTRIBUTING.md) before submitting an issue.
+## Steps [reference in brackets]
+- Install Node.js [4]
+- Install Ionic & Cordova globally [4]
+- Install Java JDK 1.8 (on my UbuntuMATE 17.10 machine, JDK 1.9 didn't work with Cordova)
+- Install Android Studio
+- Configure the SDK based on Cordova version [3]
+- Install Gradle
+- Create new Ionic Project [4]
+- Add ANDROID_HOME and JAVA_HOME environment variables [3]
+- Add ANDROID_HOME/tools and ANDROID_HOME/tools/bin to PATH [3]
+- `ionic cordova platforms remove android` (this and the next 3 steps handled an issue I had with config.xml not existing for android)
+- Delete platforms, www and plugins directory
+- `npm install`
+- `ionic cordova platforms add android`
+- `ionic cordova requirements` to ensure everything is there
+- `ionic cordova build android` to build a debug apk, my release apks are showing up as corrupt when I try to install them. I will update this once I figure out why.
+- Install electron, electron-builder and foreman [1]
+- Edit package.json to add content needed for electron and electron-builder [1]
+- `mkdir config` and `cp node_modules/@ionic/app-scripts/config/webpack.config.js config` [1]
+- Add externals array to devConfig and prodConfig after plugins array [1]
+- `mkdir electron` and create electron/electron.js (remember to comment out 'win.webContents.openDevTools();' when building releases) [1]
+- Add additional scripts to package.json. I left out the start because I wanted to use `ionic lab` with foreman [1]
+- Create Procfile for foreman. For the ionic: line, I replaced `npm start` with `ionic lab`. [1]
+- `npm run dev` to bring up Electron and Ionic Lab. You will need to Ctrl+R the Electron window after `ionic lab` starts [1]
+- `npm run ebuild` to build an executable, I am on linux and so it makes and AppImage by default. [2]
 
+That's it, you will see additional info in [2] about accessing electron functions but I haven't done that yet. I will update this if I end up doing so. I will also update this as time goes on and I learn more about Ionic, Cordova and Electron.
 
-## Table of Contents
- - [Getting Started](#getting-started)
- - [Contributing](#contributing)
- - [Use Cases](#use-cases)
- - [App Preview](#app-preview)
- - [File Structure of App](#file-structure-of-app)
-
-
-## Getting Started
-
-* [Download the installer](https://nodejs.org/) for Node.js 6 or greater.
-* Install the ionic CLI globally: `npm install -g ionic`
-* Clone this repository: `git clone https://github.com/ionic-team/ionic-conference-app.git`.
-* Run `npm install` from the project root.
-* Run `ionic serve` in a terminal from the project root.
-* Profit. :tada:
-
-_Note: You may need to add “sudo” in front of any global commands to install the utilities._
-
-## Contributing
-See [CONTRIBUTING.md](https://github.com/ionic-team/ionic-conference-app/blob/master/.github/CONTRIBUTING.md) :tada::+1:
-
-
-## Use Cases
-
-* Action Sheet - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/speaker-list/speaker-list.html) | [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/speaker-list/speaker-list.ts) ]
-* Alert - [ [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts) ]
-* Cards - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/speaker-list/speaker-list.html) ]
-* Datetime - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/about/about.html) ]
-* Grid - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/login/login.html) ]
-* Inputs - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/login/login.html) ]
-* Items (Sliding) - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.html) | [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts) ]
-* Menu - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/app/app.template.html) |
-[code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/app/app.component.ts) ]
-* Modal - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule-filter/schedule-filter.html) | [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts) ]
-* Searchbar - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.html) | [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts) ]
-* Segment - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.html) | [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts) ]
-* Slides - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/tutorial/tutorial.html) |
-* Sticky headers - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.html) ]
-* Tabs - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/tabs/tabs.html) | [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/tabs/tabs.ts) ]
-* Toggle - [ [template](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule-filter/schedule-filter.html) ]
-[code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/tutorial/tutorial.ts) ]
-* Using Angular HTTP for JSON - [ [code](https://github.com/ionic-team/ionic-conference-app/blob/master/src/providers/conference-data.ts) | [usage](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts) ]
-
-
-## App Preview
-
-[Try it live](https://ionic-team.github.io/ionic-conference-app/www)
-
-All app preview screenshots were taken by running `ionic serve --lab` on a retina display.
-
-- [Schedule Page](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/schedule/schedule.html)
-
-  <img src="resources/screenshots/SchedulePage.png" alt="Schedule">
-
-
-- [About Page](https://github.com/ionic-team/ionic-conference-app/blob/master/src/pages/about/about.html)
-
-  <img src="resources/screenshots/AboutPage.png" alt="Schedule">
-
-
-- To see more images of the app, check out the [screenshots directory](https://github.com/ionic-team/ionic-conference-app/tree/master/resources/screenshots)!
-
-
-## Deploying
-
-* PWA - Un-comment [this](https://github.com/ionic-team/ionic2-app-base/blob/master/src/index.html#L21), run `npm run ionic:build --prod` and then push the `www` folder to your favorite hosting service
-* Android - Run `ionic cordova run android --prod`
-  - If you are deploying to Android 4.4 or below we recommend adding crosswalk: `cordova plugin add cordova-plugin-crosswalk-webview`
-* iOS - Run `ionic cordova run ios --prod`
-
-## File Structure of App
-
-```
-ionic-conference-app/
-├-- .github/                            * GitHub files
-│   ├── CONTRIBUTING.md                 * Documentation on contributing to this repo
-│   └── ISSUE_TEMPLATE.md               * Template used to populate issues in this repo
-|
-|-- resources/
-|
-|-- src/
-|    |-- app/
-|    |    ├── app.component.ts
-|    |    └── app.module.ts
-|    |    └── app.template.html
-|    |    └── main.ts
-|    |
-|    |-- assets/
-|    |    ├── data/
-|    |    |    └── data.json
-|    |    |
-|    |    ├── fonts/
-|    |    |     ├── ionicons.eot
-|    |    |     └── ionicons.svg
-|    |    |     └── ionicons.ttf
-|    |    |     └── ionicons.woff
-|    |    |     └── ionicons.woff2
-|    |    |
-|    |    ├── img/
-|    |
-|    |-- pages/                          * Contains all of our pages
-│    │    ├── about/                     * About tab page
-│    │    │    ├── about.html            * AboutPage template
-│    │    │    └── about.ts              * AboutPage code
-│    │    │    └── about.scss            * AboutPage stylesheet
-│    │    │
-│    │    ├── account/                   * Account page
-│    │    │    ├── account.html          * AccountPage template
-│    │    │    └── account.ts            * AccountPage code
-│    │    │    └── account.scss          * AccountPage stylesheet
-│    │    │
-│    │    │── login/                     * Login page
-│    │    │    ├── login.html            * LoginPage template
-│    │    │    └── login.ts              * LoginPage code
-│    │    │    └── login.scss            * LoginPage stylesheet
-│    │    │
-│    │    │── map/                       * Map tab page
-│    │    │    ├── map.html              * MapPage template
-│    │    │    └── map.ts                * MapPage code
-│    │    │    └── map.scss              * MapPage stylesheet
-│    │    │
-│    │    │── schedule/                  * Schedule tab page
-│    │    │    ├── schedule.html         * SchedulePage template
-│    │    │    └── schedule.ts           * SchedulePage code
-│    │    │    └── schedule.scss         * SchedulePage stylesheet
-│    │    │
-│    │    │── schedule-filter/            * Schedule Filter page
-│    │    │    ├── schedule-filter.html   * ScheduleFilterPage template
-│    │    │    └── schedule-filter.ts     * ScheduleFilterPage code
-│    │    │    └── schedule-filter.scss   * ScheduleFilterPage stylesheet
-│    │    │
-│    │    │── session-detail/            * Session Detail page
-│    │    │    ├── session-detail.html   * SessionDetailPage template
-│    │    │    └── session-detail.ts     * SessionDetailPage code
-│    │    │
-│    │    │── signup/                    * Signup page
-│    │    │    ├── signup.html           * SignupPage template
-│    │    │    └── signup.ts             * SignupPage code
-│    │    │
-│    │    │── speaker-detail/            * Speaker Detail page
-│    │    │    ├── speaker-detail.html   * SpeakerDetailPage template
-│    │    │    └── speaker-detail.ts     * SpeakerDetailPage code
-│    │    │    └── speaker-detail.scss   * SpeakerDetailPage stylesheet
-│    │    │
-│    │    │── speaker-list/              * Speakers tab page
-│    │    │    ├── speaker-list.html     * SpeakerListPage template
-│    │    │    └── speaker-list.ts       * SpeakerListPage code
-│    │    │    └── speaker-list.scss     * SpeakerListPage stylesheet
-|    |    |
-│    │    │── support/                   * Support page
-│    │    │    ├── support.html          * SupportPage template
-│    │    │    └── support.ts            * SupportPage code
-│    │    │    └── support.scss          * SupportPage stylesheet
-│    │    │
-│    │    │── tabs/                      * Tabs page
-│    │    │    ├── tabs.html             * TabsPage template
-│    │    │    └── tabs.ts               * TabsPage code
-│    │    │
-│    │    └── tutorial/                  * Tutorial Intro page
-│    │         ├── tutorial.html         * TutorialPage template
-│    │         └── tutorial.ts           * TutorialPage code
-│    │         └── tutorial.scss         * TutorialPage stylesheet
-|    |
-│    ├── providers/                      * Contains all Injectables
-│    │     ├── conference-data.ts        * ConferenceData code
-│    │     └── user-data.ts              * UserData code
-│    ├── theme/                          * App theme files
-|    |     ├── variables.scss            * App Shared Sass Variables
-|    |
-|    |-- index.html
-|
-|-- www/
-|    ├── assets/
-|    |    ├── data/
-|    |    |    └── data.json
-|    |    |
-|    |    ├── fonts/
-|    |    |     ├── ionicons.eot
-|    |    |     └── ionicons.svg
-|    |    |     └── ionicons.ttf
-|    |    |     └── ionicons.woff
-|    |    |     └── ionicons.woff2
-|    |    |
-|    |    ├── img/
-|    |
-|    └── build/
-|    └── index.html
-|
-├── .editorconfig                       * Defines coding styles between editors
-├── .gitignore                          * Example git ignore file
-├── LICENSE                             * Apache License
-├── README.md                           * This file
-├── config.xml                          * Cordova configuration file
-├── ionic.config.json                   * Ionic configuration file
-├── package.json                        * Defines our JavaScript dependencies
-├── tsconfig.json                       * Defines the root files and the compiler options
-├── tslint.json                         * Defines the rules for the TypeScript linter
-```
