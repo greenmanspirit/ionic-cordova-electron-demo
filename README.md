@@ -10,7 +10,7 @@ This is what I had to do, please do not take this as an authoritative source. I 
 1. https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html#requirements-and-support
 1. https://ionicframework.com/getting-started/
 
-## Steps [reference in brackets]
+## Steps [resource in brackets]
 - Install Node.js [4]
 - Install Ionic & Cordova globally [4]
 - Install Java JDK 1.8 (on my UbuntuMATE 17.10 machine, JDK 1.9 didn't work with Cordova)
