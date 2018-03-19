@@ -4,12 +4,6 @@ This is a Demo application based on the Ionic Conference Application. I made thi
 ## WARNING
 This is what I had to do, please do not take this as an authoritative source. I wrote this after I worked everything out so I may have missed a step. This is presented as is with no warranty. That said, if something below helps you, by all means use it.
 
-## Resources
-1. https://medium.com/@LohaniDamodar/lets-make-desktop-application-with-ionic-3-and-electron-44316f82901d
-1. https://competenepal.com/ionic2-electron-part-2/
-1. https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html#requirements-and-support
-1. https://ionicframework.com/getting-started/
-
 ## Steps [resource in brackets]
 - Install Node.js [4]
 - Install Ionic & Cordova globally [4]
@@ -38,3 +32,8 @@ This is what I had to do, please do not take this as an authoritative source. I 
 
 That's it, you will see additional info in [2] about accessing electron functions but I haven't done that yet. I will update this if I end up doing so. I will also update this as time goes on and I learn more about Ionic, Cordova and Electron.
 
+## Resources
+1. https://medium.com/@LohaniDamodar/lets-make-desktop-application-with-ionic-3-and-electron-44316f82901d
+1. https://competenepal.com/ionic2-electron-part-2/
+1. https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html#requirements-and-support
+1. https://ionicframework.com/getting-started/
